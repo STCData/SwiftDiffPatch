@@ -1,3 +1,5 @@
+[![Swift](https://github.com/STCData/SwiftDiffPatch/actions/workflows/swift.yml/badge.svg)](https://github.com/STCData/SwiftDiffPatch/actions/workflows/swift.yml)
+
 # SwiftDiffPatch
 
 ```
