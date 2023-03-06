@@ -2,7 +2,7 @@
 
 # SwiftDiffPatch
 
-```
+```swift
 import SwiftDiffPatch
 
 let patch = """
