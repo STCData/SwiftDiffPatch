@@ -8,7 +8,7 @@
 import Foundation
 
 
-extension String {
+public extension String {
     func patched(with patch: String) -> String? {
         return try? SwiftDiffPatch.apply(patch, original: self)
     }
