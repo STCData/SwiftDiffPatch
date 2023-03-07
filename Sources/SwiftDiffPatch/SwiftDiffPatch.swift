@@ -127,12 +127,12 @@ public struct SwiftDiffPatch {
                 guard start <= originalLines.count else {
                     throw PatchError.lineNumberNotFound
                 }
-                originalLines.insert(contentsOf: output, at: start)
+                originalLines.insert(contentsOf: output, at: start-1)
             case let .delete(start, end, _, _):
-                guard start < originalLines.count && end < originalLines.count else {
+                guard start-1 < originalLines.count && end-1 < originalLines.count else {
                     throw PatchError.lineNumberNotFound
                 }
-                originalLines.removeSubrange(start...end)
+                originalLines.removeSubrange(start-1...end-1)
             }
         }
         

@@ -97,6 +97,75 @@ final class PatchedTests: XCTestCase {
         
         XCTAssertEqual(patched, original)
     }
+    
+    
+    func testAddingLines() {
+        let original = """
+            This is some text.
+            """
+        let patch = """
+            1a1,3
+            > This is a new line.
+            > This is another new line.
+            > And one more new line.
+            """
+        let expected = """
+            This is a new line.
+            This is another new line.
+            And one more new line.
+            This is some text.
+            """
+        let patched = original.patched(with: patch)
+        XCTAssertEqual(patched, expected)
+    }
+
+
+    
+    func testDeletingLines() {
+        let original = """
+            Line 1.
+            Line 2.
+            This line will be deleted.
+            This line will also be deleted.
+            Line 5.
+            Line 6.
+            """
+        let patch = """
+            3,4d4
+            < This line will be deleted.
+            < This line will also be deleted.
+            """
+        let expected = """
+            Line 1.
+            Line 2.
+            Line 5.
+            Line 6.
+            """
+        let patched = original.patched(with: patch)
+        XCTAssertEqual(patched, expected)
+    }
+    
+    func testReplacingLines() {
+        let original = """
+            Line 1.
+            This is the old line.
+            Line 3.
+            """
+        let patch = """
+            2c2
+            < This is the old line.
+            ---
+            > This is the new line.
+            """
+        let expected = """
+            Line 1.
+            This is the new line.
+            Line 3.
+            """
+        let patched = original.patched(with: patch)
+        XCTAssertEqual(patched, expected)
+    }
+
 
 }
 
