@@ -165,8 +165,68 @@ final class PatchedTests: XCTestCase {
         let patched = original.patched(with: patch)
         XCTAssertEqual(patched, expected)
     }
+    
+    func testCustomStringConvertibleChange() {
+        let patch1 = """
+            2c2
+            < This is the old line.
+            ---
+            > This is the new line.
+            """
+        let p1parsed = SwiftDiffPatch.parse(patch1)
+        let p1serialized = p1parsed?.last?.description
+        XCTAssertEqual(patch1, p1serialized)
+    }
 
+    
+    func testCustomStringConvertibleAdd() {
+        let patch1 = """
+            1a1,3
+            > This is a new line.
+            > This is another new line.
+            > And one more new line.
+            """
+        let p1parsed = SwiftDiffPatch.parse(patch1)
+        let p1serialized = p1parsed?.last?.description
+        XCTAssertEqual(patch1, p1serialized)
+    }
+    
+    func testCustomStringConvertibleDelete() {
+        let patch1 = """
+            3,4d4
+            < This line will be deleted.
+            < This line will also be deleted.
+            """
+        let p1parsed = SwiftDiffPatch.parse(patch1)
+        let p1serialized = p1parsed?.last?.description
+        XCTAssertEqual(patch1, p1serialized)
+    }
+    
+    func testCustomStringConvertibles() {
+        let patch = """
+        2a1,3
+        > Cats are the best pets!
+        > They're cute, cuddly, and full of personality.
+        > I love how they purr when you pet them.
+        9,11d5
+        < Some people are allergic to cats.
+        < But there are hypoallergenic breeds that are less likely to cause allergies.
+        < It's important to research a breed before getting a cat.
+        4c7
+        < Cats are independent creatures.
+        ---
+        > While cats can be independent, they also crave affection from their humans.
+        """
 
+        guard let patchCommands = SwiftDiffPatch.parse(patch) else {
+            XCTFail("Failed to parse patch")
+            return
+        }
+        
+        let parsedSerializedCommands = patchCommands.description
+        
+        XCTAssertEqual(patch, parsedSerializedCommands)
+    }
 }
 
 
