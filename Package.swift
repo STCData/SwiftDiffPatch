@@ -8,16 +8,19 @@ let package = Package(
     products: [
         .library(
             name: "SwiftDiffPatch",
-            targets: ["SwiftDiffPatch"]),
+            targets: ["SwiftDiffPatch"]
+        ),
     ],
     dependencies: [
     ],
     targets: [
         .target(
             name: "SwiftDiffPatch",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "SwiftDiffPatchTests",
-            dependencies: ["SwiftDiffPatch"]),
+            dependencies: ["SwiftDiffPatch"]
+        ),
     ]
 )
